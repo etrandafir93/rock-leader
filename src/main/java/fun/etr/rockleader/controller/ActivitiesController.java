@@ -1,10 +1,9 @@
 package fun.etr.rockleader.controller;
 
-import fun.etr.rockleader.persistence.Activity;
-import fun.etr.rockleader.persistence.ActivityRepository;
+import fun.etr.rockleader.persistence.model.Activity;
+import fun.etr.rockleader.persistence.repository.ActivityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,7 +11,6 @@ import java.util.Collection;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("activities")
 public class ActivitiesController {
 
 	private final ActivityRepository repo;

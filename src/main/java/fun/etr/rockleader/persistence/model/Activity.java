@@ -1,4 +1,4 @@
-package fun.etr.rockleader.persistence;
+package fun.etr.rockleader.persistence.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
