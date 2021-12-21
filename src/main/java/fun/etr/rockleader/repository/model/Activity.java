@@ -1,8 +1,7 @@
-package fun.etr.rockleader.persistence.model;
+package fun.etr.rockleader.repository.model;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.springframework.data.rest.core.annotation.RestResource;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -23,12 +22,6 @@ public class Activity {
     @NotBlank(message = "Activity name is mandatory")
     private String name;
 
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @ManyToOne
-    @JoinColumn(name="account_id", nullable=false)
-    private Account account;
-
     private String description;
 
     @NotNull(message = "Activity Type is mandatory")
@@ -36,6 +29,11 @@ public class Activity {
     private ActivityType type;
 
     private int difficulty;
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name="account_id")
+    private Account account;
 
     @ElementCollection
     private Set<String> tags;

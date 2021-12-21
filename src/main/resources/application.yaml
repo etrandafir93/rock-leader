@@ -1,0 +1,26 @@
+spring.jpa:
+  generate-ddl: true
+  properties.hibernate:
+    dialect: org.hibernate.dialect.PostgreSQLDialect
+    ddl-auto: create-drop
+    show-sql: true
+
+
+spring.datasource:
+  url: jdbc:postgresql://ec2-54-74-95-84.eu-west-1.compute.amazonaws.com:5432/dea93shc01tf76
+  username: nufyasoxgqxusg
+  password: 786d4f501e36412b2e0d2d968130bac1d40b9cc7b2b453377d3c8530ed27a70d
+
+security:
+  oauth2:
+    client:
+      clientId: ${FB_ID}
+      clientSecret: ${FB_SECRET}
+      accessTokenUri: https://graph.facebook.com/oauth/access_token
+      userAuthorizationUri: https://www.facebook.com/dialog/oauth
+      tokenName: oauth_token
+      authenticationScheme: query
+      clientAuthenticationScheme: form
+    resource:
+      userInfoUri: https://graph.facebook.com/me
+
