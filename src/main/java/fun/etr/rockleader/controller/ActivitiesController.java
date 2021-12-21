@@ -34,9 +34,9 @@ public class ActivitiesController {
     }
 
     private Account extractUserAccount(Principal pricipal) {
-        var attributes = (Map<String, String>) ((OAuth2Authentication) pricipal).getUserAuthentication().getDetails();
-        var fbId = Long.parseLong(attributes.get("id"));
-        var name = attributes.get("name");
+        Map<String, String> attributes = (Map<String, String>) ((OAuth2Authentication) pricipal).getUserAuthentication().getDetails();
+        long fbId = Long.parseLong(attributes.get("id"));
+        String name = attributes.get("name");
         return accountRepository.findByFacebookId(fbId)
                 .orElseGet(() -> accountRepository.save(new Account(fbId, name)));
     }
