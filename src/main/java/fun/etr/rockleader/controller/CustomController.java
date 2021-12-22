@@ -8,10 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.Map;
@@ -20,7 +17,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("api/custom")
 @RequiredArgsConstructor
-public class ActivitiesController {
+public class CustomController {
 
     private final ActivityRepository activityRepository;
     private final AccountRepository accountRepository;
@@ -33,12 +30,22 @@ public class ActivitiesController {
         return activityRepository.save(activity);
     }
 
-    private Account extractUserAccount(Principal pricipal) {
-        Map<String, String> attributes = (Map<String, String>) ((OAuth2Authentication) pricipal).getUserAuthentication().getDetails();
+    @GetMapping("user")
+    public Account user(Principal principal) {
+        return extractAccount(principal);
+    }
+
+    private Account extractUserAccount(Principal principal) {
+        Account user = extractAccount(principal);
+        return accountRepository.findByFacebookId(user.getFacebookId())
+                .orElseGet(() -> accountRepository.save(user));
+    }
+
+    private Account extractAccount(Principal principal) {
+        Map<String, String> attributes = (Map<String, String>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
         long fbId = Long.parseLong(attributes.get("id"));
         String name = attributes.get("name");
-        return accountRepository.findByFacebookId(fbId)
-                .orElseGet(() -> accountRepository.save(new Account(fbId, name)));
+        return new Account(fbId, name);
     }
 
 }

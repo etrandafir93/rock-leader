@@ -1,4 +1,5 @@
 
+
 function findById(id) {
     return document.getElementById(id);
 } 
@@ -19,6 +20,12 @@ function clearForm() {
     findById("activity-description").value = null;
 }
 
+function assertUserLoggedIn() {
+    return axios.get("api/custom/user")
+        .then(user => console.log(user))
+        .catch(err => window.location.href = "/login");
+}
+
 function saveForm() {
     let form = loadForm();
     axios.post("api/custom/activities", form)
@@ -29,3 +36,6 @@ function saveForm() {
         })
         .catch(err => alert(JSON.stringify(err)));
 }
+
+
+assertUserLoggedIn();

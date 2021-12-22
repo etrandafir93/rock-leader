@@ -10,9 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class RequestAppConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.antMatcher("/**")
-            .cors().and()
-            .csrf().disable()
+        http
+            .cors().and().csrf().disable()
             .authorizeRequests()
             .antMatchers("/", "/login**", "/js/**", "/webjars/**", "/error**")
             .permitAll()
